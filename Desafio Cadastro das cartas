@@ -1,0 +1,225 @@
+#include <stdio.h>
+
+/*
+  Super Trunfo - Países (Nível Novato)
+  - Cadastra duas cartas (sem laços e sem condicionais)
+  - Atributos:
+      codigo (ex.: A01)
+      populacao (int)
+      area (float)
+      pib (float)
+      pontosTuristicos (int)
+*/
+
+typedef struct {
+    char codigo[4];          // "A01" .. "H04" (3 chars + '\0')
+    int populacao;           // int (conforme especificação do nível novato)
+    float area;              // km^2
+    float pib;               // unidade livre (ex.: bilhões)
+    int pontosTuristicos;    // quantidade
+} Carta;
+
+int main(void) {
+    Carta c1, c2;
+
+    /* -------- Carta 1 -------- */
+    printf("=== Cadastro Carta 1 ===\n");
+    printf("Codigo (ex: A01): "); scanf("%3s", c1.codigo);
+    printf("Populacao (int): "); scanf("%d", &c1.populacao);
+    printf("Area (float): "); scanf("%f", &c1.area);
+    printf("PIB (float): "); scanf("%f", &c1.pib);
+    printf("Pontos turisticos (int): "); scanf("%d", &c1.pontosTuristicos);
+
+    /* -------- Carta 2 -------- */
+    printf("\n=== Cadastro Carta 2 ===\n");
+    printf("Codigo (ex: B02): "); scanf("%3s", c2.codigo);
+    printf("Populacao (int): "); scanf("%d", &c2.populacao);
+    printf("Area (float): "); scanf("%f", &c2.area);
+    printf("PIB (float): "); scanf("%f", &c2.pib);
+    printf("Pontos turisticos (int): "); scanf("%d", &c2.pontosTuristicos);
+
+    /* -------- Exibição -------- */
+    printf("\n=== Dados Cadastrados ===\n");
+    printf("\n[Carta 1: %s]\n", c1.codigo);
+    printf("Populacao: %d\n", c1.populacao);
+    printf("Area: %.2f\n", c1.area);
+    printf("PIB: %.2f\n", c1.pib);
+    printf("Pontos Turisticos: %d\n", c1.pontosTuristicos);
+
+    printf("\n[Carta 2: %s]\n", c2.codigo);
+    printf("Populacao: %d\n", c2.populacao);
+    printf("Area: %.2f\n", c2.area);
+    printf("PIB: %.2f\n", c2.pib);
+    printf("Pontos Turisticos: %d\n", c2.pontosTuristicos);
+
+    return 0;
+}
+
+
+/*
+  Super Trunfo - Países (Nível Aventureiro)
+  - Mesma entrada do Novato (sem laços e sem condicionais)
+  - Calcula:
+      densidade = populacao / area
+      pibPerCapita = pib / populacao
+*/
+
+typedef struct {
+    char codigo[4];
+    int populacao;
+    float area;
+    float pib;
+    int pontosTuristicos;
+} Carta;
+
+int main(void) {
+    Carta c1, c2;
+
+    /* -------- Carta 1 -------- */
+    printf("=== Cadastro Carta 1 ===\n");
+    printf("Codigo (ex: A01): "); scanf("%3s", c1.codigo);
+    printf("Populacao (int): "); scanf("%d", &c1.populacao);
+    printf("Area (float): "); scanf("%f", &c1.area);
+    printf("PIB (float): "); scanf("%f", &c1.pib);
+    printf("Pontos turisticos (int): "); scanf("%d", &c1.pontosTuristicos);
+
+    /* -------- Carta 2 -------- */
+    printf("\n=== Cadastro Carta 2 ===\n");
+    printf("Codigo (ex: B02): "); scanf("%3s", c2.codigo);
+    printf("Populacao (int): "); scanf("%d", &c2.populacao);
+    printf("Area (float): "); scanf("%f", &c2.area);
+    printf("PIB (float): "); scanf("%f", &c2.pib);
+    printf("Pontos turisticos (int): "); scanf("%d", &c2.pontosTuristicos);
+
+    /* Cálculos (sem if/for): */
+    float dens1 = c1.populacao / c1.area;
+    float dens2 = c2.populacao / c2.area;
+    float ppc1  = c1.pib / c1.populacao;
+    float ppc2  = c2.pib / c2.populacao;
+
+    /* -------- Exibição -------- */
+    printf("\n=== Dados + Atributos Calculados ===\n");
+
+    printf("\n[Carta 1: %s]\n", c1.codigo);
+    printf("Populacao: %d\n", c1.populacao);
+    printf("Area: %.2f\n", c1.area);
+    printf("PIB: %.2f\n", c1.pib);
+    printf("Pontos Turisticos: %d\n", c1.pontosTuristicos);
+    printf("Densidade: %.2f\n", dens1);
+    printf("PIB per Capita: %.6f\n", ppc1);
+
+    printf("\n[Carta 2: %s]\n", c2.codigo);
+    printf("Populacao: %d\n", c2.populacao);
+    printf("Area: %.2f\n", c2.area);
+    printf("PIB: %.2f\n", c2.pib);
+    printf("Pontos Turisticos: %d\n", c2.pontosTuristicos);
+    printf("Densidade: %.2f\n", dens2);
+    printf("PIB per Capita: %.6f\n", ppc2);
+
+    return 0;
+}
+
+/*
+  Super Trunfo - Países (Nível Mestre)
+  - Entrada: duas cartas via scanf
+  - Tipos:
+      populacao: unsigned long int (conforme especificacao do Mestre)
+      area, pib: float
+  - Atributos calculados:
+      densidade      = populacao / area
+      pibPerCapita   = pib / populacao
+      superPoder     = populacao + area + pib + pontosTuristicos
+                       + pibPerCapita + (1.0f / densidade)
+                       (tudo promovido a float na soma final)
+  - Regras de vitoria (impressao 1/0):
+      Populacao, Area, PIB, Pontos, PIB per Capita, SuperPoder -> MAIOR vence
+      Densidade -> MENOR vence
+*/
+
+typedef struct {
+    char codigo[4];
+    unsigned long int populacao; // Mestre: tipo alterado
+    float area;
+    float pib;
+    int pontosTuristicos;
+} Carta;
+
+int main(void) {
+    Carta a, b;
+
+    /* -------- Entrada -------- */
+    printf("=== Cadastro Carta 1 ===\n");
+    printf("Codigo (ex: A01): "); scanf("%3s", a.codigo);
+    printf("Populacao (unsigned long int): "); scanf("%lu", &a.populacao);
+    printf("Area (float): "); scanf("%f", &a.area);
+    printf("PIB (float): "); scanf("%f", &a.pib);
+    printf("Pontos turisticos (int): "); scanf("%d", &a.pontosTuristicos);
+
+    printf("\n=== Cadastro Carta 2 ===\n");
+    printf("Codigo (ex: B02): "); scanf("%3s", b.codigo);
+    printf("Populacao (unsigned long int): "); scanf("%lu", &b.populacao);
+    printf("Area (float): "); scanf("%f", &b.area);
+    printf("PIB (float): "); scanf("%f", &b.pib);
+    printf("Pontos turisticos (int): "); scanf("%d", &b.pontosTuristicos);
+
+    /* -------- Cálculos -------- */
+    float densA = a.populacao / a.area;
+    float densB = b.populacao / b.area;
+
+    float ppcA = a.pib / (float)a.populacao;
+    float ppcB = b.pib / (float)b.populacao;
+
+    /* Super Poder:
+       - Soma de TODOS os atributos (básicos + calculados)
+       - densidade entra invertida (1/densidade)
+       - use casting p/ evitar overflow e garantir soma em float
+    */
+    float spA = (float)a.populacao + a.area + a.pib + (float)a.pontosTuristicos
+              + ppcA + (1.0f / densA);
+
+    float spB = (float)b.populacao + b.area + b.pib + (float)b.pontosTuristicos
+              + ppcB + (1.0f / densB);
+
+    /* -------- Exibição dos dados -------- */
+    printf("\n=== Cartas ===\n");
+    printf("\n[Carta 1: %s]\n", a.codigo);
+    printf("Populacao: %lu\n", a.populacao);
+    printf("Area: %.2f\n", a.area);
+    printf("PIB: %.2f\n", a.pib);
+    printf("Pontos Turisticos: %d\n", a.pontosTuristicos);
+    printf("Densidade: %.6f\n", densA);
+    printf("PIB per Capita: %.6f\n", ppcA);
+    printf("Super Poder: %.6f\n", spA);
+
+    printf("\n[Carta 2: %s]\n", b.codigo);
+    printf("Populacao: %lu\n", b.populacao);
+    printf("Area: %.2f\n", b.area);
+    printf("PIB: %.2f\n", b.pib);
+    printf("Pontos Turisticos: %d\n", b.pontosTuristicos);
+    printf("Densidade: %.6f\n", densB);
+    printf("PIB per Capita: %.6f\n", ppcB);
+    printf("Super Poder: %.6f\n", spB);
+
+    /* -------- Comparações (1 se Carta 1 vence; 0 se Carta 2 vence) -------- */
+    /* Maior vence: */
+    int rPop   = (a.populacao > b.populacao) ? 1 : 0;
+    int rArea  = (a.area      > b.area)      ? 1 : 0;
+    int rPIB   = (a.pib       > b.pib)       ? 1 : 0;
+    int rPontos= (a.pontosTuristicos > b.pontosTuristicos) ? 1 : 0;
+    int rPPC   = (ppcA        > ppcB)        ? 1 : 0;
+    int rSP    = (spA         > spB)         ? 1 : 0;
+
+    /* Densidade: menor vence */
+    int rDens  = (densA < densB) ? 1 : 0;
+
+    printf("\n=== Resultado das Comparacoes (1 = Carta 1 vence | 0 = Carta 2 vence) ===\n");
+    printf("Populacao: %d\n", rPop);
+    printf("Area: %d\n", rArea);
+    printf("PIB: %d\n", rPIB);
+    printf("Pontos Turisticos: %d\n", rPontos);
+    printf("Densidade (MENOR vence): %d\n", rDens);
+    printf("PIB per Capita: %d\n", rPPC);
+    printf("Super Poder (MAIOR vence): %d\n", rSP);
+
+    return 0;
+}
